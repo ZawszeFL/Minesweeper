@@ -9,6 +9,7 @@ void setup ()
 {
     size(400, 400);
     textAlign(CENTER,CENTER);
+
     
     // make the manager
     Interactive.make( this );
@@ -100,6 +101,25 @@ public class MSButton
         if(marked==false)
         {
             clicked=false;
+        }
+        else if(bombs.contains(this))
+        {
+             displayLosingMessage();
+        }
+       else if(countBombs(r,c)>0)
+        {
+            
+            setLabel(label=new String(countBombs(r,c)+""));
+        } 
+        else  
+        {
+            for(int i=-1; i<2;i++)
+                {
+                    for(int j=-1; j<2;j++)
+                    {
+                        buttons[i][j].mousePressed();
+                    }
+                }
         }
     }
 
