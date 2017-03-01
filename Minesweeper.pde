@@ -30,7 +30,7 @@ void setup ()
 }
 public void setBombs()
 {
-    while(bombs.size()<80){
+    while(bombs.size()<50){
     int rows=(int)(Math.random()*NUM_ROWS);
     int cols=(int)(Math.random()*NUM_COLS);
     if(!bombs.contains(buttons[rows][cols]))
@@ -50,12 +50,20 @@ public void draw ()
 }
 public boolean isWon()
 {
-    //your code here
+    for(int i==0;i<NUM_ROWS;i++)
+        for(int j==0; j< NUM_COLS;j++)
+        {
+            
+        }
     return false;
 }
 public void displayLosingMessage()
 {
-    //your code here
+
+    textSize(32);
+    fill(0);
+    rect(0,0,400,400);
+    text("You lose",100,200);
 }
 public void displayWinningMessage()
 {
@@ -97,11 +105,11 @@ public class MSButton
         if(keyPressed==true)
         {
             marked=!marked;  
+            if(marked==false)
+                clicked=false;
+            
         }
-        if(marked==false)
-        {
-            clicked=false;
-        }
+
         else if(bombs.contains(this))
         {
              displayLosingMessage();
@@ -109,15 +117,16 @@ public class MSButton
        else if(countBombs(r,c)>0)
         {
             
-            setLabel(label=new String(countBombs(r,c)+""));
+            setLabel(new String(countBombs(r,c)+""));
         } 
         else  
         {
             for(int i=-1; i<2;i++)
                 {
                     for(int j=-1; j<2;j++)
-                    {
-                        buttons[i][j].mousePressed();
+                    {   
+                        if(isValid(r+i,c+j)&&buttons[r+i][c+j].isClicked()==false)
+                        buttons[r+i][c+j].mousePressed();
                     }
                 }
         }
@@ -132,9 +141,20 @@ public class MSButton
         else if(clicked)
             fill( 200 );
         else 
-            fill( 100 );
-
+            fill( 150 );
+        //base
         rect(x, y, width, height);
+        fill(255);
+        noStroke();
+        //white 
+        rect(x+1,y-19,width-2,height/6);
+        rect(x+1,y-19,width/6,height-2);
+        //dark
+        fill(100);
+        rect(x+18,y-17,width/6,height-2);
+        rect(x+3,y-3,width-5,height/6);
+        stroke(0);
+        //text
         fill(0);
         text(label,x+width/2,y+height/2);
     }
@@ -144,7 +164,7 @@ public class MSButton
     }
     public boolean isValid(int r, int c)
     {
-        if(r>=0 && r<=NUM_ROWS && c>=0 && c<=NUM_COLS)
+        if(r>=0 && r<NUM_ROWS && c>=0 && c<NUM_COLS)
             return true;
         else
         return false;
