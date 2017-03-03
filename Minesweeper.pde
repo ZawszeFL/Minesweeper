@@ -30,7 +30,7 @@ void setup ()
 }
 public void setBombs()
 {
-    while(bombs.size()<50){
+    while(bombs.size()<51){
     int rows=(int)(Math.random()*NUM_ROWS);
     int cols=(int)(Math.random()*NUM_COLS);
     if(!bombs.contains(buttons[rows][cols]))
@@ -46,28 +46,55 @@ public void draw ()
     background( 0 );
     if(isWon())
         displayWinningMessage();
+    
 
 }
 public boolean isWon()
 {
-    for(int i==0;i<NUM_ROWS;i++)
-        for(int j==0; j< NUM_COLS;j++)
+    int clikd=0;
+    for(int i=0; i<NUM_ROWS;i++)
+    {
+        for(int j=0; j< NUM_COLS;j++)
         {
-            
+            if(buttons[i][j].clicked)
+                clikd++;
         }
+    }
+    if(clikd>=350)
+    {
+        return true;
+    }
     return false;
 }
 public void displayLosingMessage()
 {
 
-    textSize(32);
+    for(int i =0; i<NUM_ROWS;i++)
+    {
+        for(int j=0; j<NUM_COLS;j++)
+        {
+            if(bombs.contains(buttons[i][j]))
+                buttons[i][j].clicked=true;
+            else
+                buttons[i][j].setLabel(new String(""));
+        }
+    }
     fill(0);
-    rect(0,0,400,400);
-    text("You lose",100,200);
+    textSize(20);
+    buttons[10][8].setLabel(new String("L"));
+    buttons[10][9].setLabel(new String("o"));
+    buttons[10][10].setLabel(new String("s"));
+    buttons[10][11].setLabel(new String("t"));
+
+
 }
 public void displayWinningMessage()
 {
-    //your code here
+    buttons[10][9].setLabel(new String("W"));
+    buttons[10][10].setLabel(new String("I"));
+    buttons[10][11].setLabel(new String("N"));
+ 
+
 }
 
 public class MSButton
@@ -79,8 +106,8 @@ public class MSButton
     
     public MSButton ( int rr, int cc )
     {
-        width = 400/NUM_COLS;
-        height = 400/NUM_ROWS;
+        width = 400/NUM_COLS +1;
+        height = 400/NUM_ROWS+1;
         r = rr;
         c = cc; 
         x = c*width;
@@ -138,21 +165,24 @@ public class MSButton
             fill(0);
          else if( clicked && bombs.contains(this) ) 
              fill(255,0,0);
-        else if(clicked)
+        else if(clicked){
             fill( 200 );
+         rect(x, y, width, height);
+     }
         else 
             fill( 150 );
+
         //base
         rect(x, y, width, height);
         fill(255);
         noStroke();
         //white 
-        rect(x+1,y-19,width-2,height/6);
-        rect(x+1,y-19,width/6,height-2);
+        rect(x+1,y-19,width-2,height/7);
+        rect(x+1,y-19,width/7,height-2);
         //dark
         fill(100);
-        rect(x+18,y-17,width/6,height-2);
-        rect(x+3,y-3,width-5,height/6);
+        rect(x+18,y-17,width/7,height-2);
+        rect(x+3,y-3,width-5,height/7);
         stroke(0);
         //text
         fill(0);
